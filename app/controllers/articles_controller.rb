@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-
+  include ArticlesHelper
   before_action :set_article, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -17,6 +17,7 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(article_params)
     if @article.save
+      flash.notice = "#{@article.title} created"
       redirect_to articles_path(@article.id)
     else
       render :new
@@ -28,7 +29,8 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    if @article.update
+    if @article.update(article_params)
+      flash.notice = "Article '#{@article.title}' Updated!"
       redirect_to article_path(@article.id)
     else
       render :edit
@@ -37,14 +39,15 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article.destroy
+    flash.notice = "Deleted #{@article.title}"
     redirect_to articles_path
   end
 
   private
 
-  def article_params
-    params.require(:article).permit(:title, :body)
-  end
+  # def article_params
+  #   params.require(:article).permit(:title, :body)
+  # end
 
   def set_article
     @article = Article.find(params[:id])
