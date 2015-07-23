@@ -1,5 +1,13 @@
 <h1><%=@article.title%></h1>
-<p><%=@article.body%></p>
+<p>
+  Tags:
+  <% @article.tags.each do |tag| %>
+      <%= link_to tag.name, tag_path(tag) %>
+  <% end %>
+
+</p>
+<br>
+<p id="body"><%=@article.body%></p><br>
 <%= link_to "Delete", article_path(@article), method: :delete, data: { confirm: "Are you sure?"} %><br>
 <%= link_to "Edit", edit_article_path(@article.id)%><br>
 

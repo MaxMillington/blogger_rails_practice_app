@@ -1,0 +1,13 @@
+<h1>Tag Index</h1>
+
+<ul id="tag">
+  <% @tags.each do |tag| %>
+      <li>
+        <%= link_to tag.name, tag_path(tag.id),
+                    class: 'tag_title', id: "tag_#{tag.id}" %>
+      </li>
+  <% end %>
+</ul>
+
+<br>
+<%=link_to "Article Index", articles_path %>
